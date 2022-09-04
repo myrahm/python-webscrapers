@@ -1,0 +1,24 @@
+"""A webscraping exercise that conducts searches and paginates 
+through results to print out the hockey teams' names.
+Not focusing on dealing with repeated team names, more of 
+just practicing looping over the multiple pages of a website
+and printing its specific data from each page"""
+
+from bs4 import BeautifulSoup
+import requests
+import time
+
+for y in range(1,25):
+
+    url = "https://www.scrapethissite.com/pages/forms/?page_num="
+    website = requests.get(url+str(y))
+
+    soup = BeautifulSoup(website.content, features='html.parser')
+
+    teams = soup.find_all('tr', class_="team")
+
+    for x in teams:
+        team_name = x.find('td').text
+        print(team_name.strip())
+    
+    time.sleep(3)
