@@ -1,2 +1,2 @@
 # python-webscrapers
-creating webscrapers using python
+practicing webscraping using python
