@@ -1,2 +1,2 @@
 # python-webscrapers
-practicing webscraping using python
+practicing webscraping using python and beautifulsoup
