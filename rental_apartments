@@ -1,0 +1,29 @@
+#Practicing webscraping data from a website and tranferring it to a csv document
+
+import csv
+from bs4 import BeautifulSoup
+import requests
+
+url = "https://www.pararius.com/apartments/rotterdam"
+website = requests.get(url)
+
+soup = BeautifulSoup(website.content, features='html.parser')
+
+homes = soup.find_all('section', class_ = 'listing-search-item')
+
+
+with open('rental_apartments.csv', 'w', encoding='utf8', newline='') as file:
+    
+    writer = csv.writer(file)
+    header = ['Name', 'Location', 'Price', 'Area', 'Rooms']
+    writer.writerow(header)
+
+    for home in homes:
+        name = home.find('a', class_="listing-search-item__link--title").text.replace('\n', '')
+        location = home.find('div', class_="listing-search-item__sub-title").text.replace('\n', '')
+        price = home.find('div', class_="listing-search-item__price").text.replace('\n', '')
+        living_area = home.find('li', class_="illustrated-features__item--surface-area").text.replace('\n', '')
+        rooms = home.find('li', class_="illustrated-features__item--number-of-rooms").text.replace('\n', '')
+        
+        details = [name, location, price, living_area, rooms]
+        writer.writerow(details)
